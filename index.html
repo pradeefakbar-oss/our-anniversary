@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#100d18">
+  <meta name="description" content="Sepuluh bab kecil untuk merayakan cerita COSA dan TACA.">
+  <title>COSA × TACA — Our Anniversary</title>
+  <style>
+    :root{
+      --ink:#100d18;--ink2:#191321;--cream:#fff7f0;--muted:#d7c6cb;
+      --rose:#e8aeb9;--rose2:#f5cbd1;--gold:#e5c58e;--line:rgba(255,245,240,.18);
+      --serif:Georgia,'Times New Roman',serif;--sans:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--ink);color:var(--cream);font-family:var(--sans);overflow:hidden}
+    body{selection-background-color:var(--rose)}
+    button{font:inherit}
+    .grain{position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E");mix-blend-mode:soft-light}
+    .topbar{position:fixed;z-index:30;top:0;left:0;right:0;height:76px;padding:0 clamp(18px,5vw,72px);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(9,7,14,.7),transparent)}
+    .brand{font-family:var(--serif);font-size:16px;letter-spacing:.22em;color:#fff4ed;text-decoration:none}
+    .brand b{color:var(--gold);font-weight:400}
+    .top-actions{display:flex;align-items:center;gap:10px}
+    .music-btn,.sound-label{border:1px solid var(--line);background:rgba(20,15,25,.38);backdrop-filter:blur(12px);color:var(--cream);border-radius:999px;padding:10px 14px;cursor:pointer;transition:.25s}
+    .music-btn:hover,.sound-label:hover{border-color:var(--gold);transform:translateY(-1px)}
+    .music-btn{width:42px;height:42px;display:grid;place-items:center;font-size:15px;padding:0}
+    .music-btn.playing{color:var(--gold);box-shadow:0 0 22px rgba(229,197,142,.2)}
+    .sound-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+    .stage{position:relative;width:100%;height:100dvh;min-height:560px;overflow:hidden}
+    .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:100px clamp(22px,7vw,110px) 105px;opacity:0;visibility:hidden;transform:scale(1.025);transition:opacity .75s ease,transform 1s cubic-bezier(.2,.7,.2,1),visibility .75s;isolation:isolate;overflow-y:auto;overscroll-behavior:contain}
+    .slide::before{content:"";position:absolute;inset:0;z-index:-2;background-image:linear-gradient(90deg,rgba(9,7,14,.9) 0%,rgba(12,8,17,.72) 48%,rgba(10,7,14,.58) 100%),linear-gradient(0deg,rgba(9,7,14,.55),rgba(9,7,14,.12)),var(--bg-image);background-size:cover;background-position:center;transform:scale(1.025);transition:transform 8s ease}
+    .slide::after{content:"";position:absolute;inset:18px;border:1px solid rgba(255,244,233,.12);pointer-events:none;z-index:-1}
+    .slide.active{opacity:1;visibility:visible;transform:scale(1)}
+    .slide.active::before{transform:scale(1)}
+    .slide-inner{width:min(1120px,100%);position:relative;z-index:1}
+    .eyebrow{display:flex;align-items:center;gap:12px;color:var(--gold);font-size:10px;letter-spacing:.28em;text-transform:uppercase;margin:0 0 22px}
+    .eyebrow::before{content:"";height:1px;width:36px;background:var(--gold);opacity:.8}
+    h1,h2,h3,p{margin-top:0}
+    .display{font:clamp(48px,8vw,108px)/.98 var(--serif);font-weight:400;letter-spacing:-.045em;margin:0 0 26px;max-width:850px}
+    .display em{font-weight:400;color:var(--rose2)}
+    .section-title{font:clamp(38px,5.4vw,68px)/1.05 var(--serif);font-weight:400;letter-spacing:-.03em;margin:0 0 20px}
+    .lead{font:clamp(16px,1.65vw,20px)/1.8 var(--serif);color:#f3e5e2;max-width:690px}
+    .body-copy{font-size:14px;line-height:1.9;color:var(--muted);max-width:650px}
+    .micro{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+    .rule{width:74px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:26px 0}
+    .hero-center{text-align:center;display:flex;align-items:center;flex-direction:column}
+    .hero-center .display{font-size:clamp(54px,10vw,132px);max-width:100%;letter-spacing:.015em}
+    .hero-center .lead{max-width:540px}
+    .ornament{width:92px;height:92px;border:1px solid rgba(229,197,142,.48);border-radius:50%;display:grid;place-items:center;color:var(--gold);font:38px var(--serif);margin-bottom:30px;position:relative}
+    .ornament::before,.ornament::after{content:"";position:absolute;width:118px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);opacity:.4}
+    .ornament::after{transform:translate(-50%,-50%) rotate(-45deg)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;border:1px solid rgba(229,197,142,.7);border-radius:999px;padding:14px 23px;color:#fff8f0;text-decoration:none;background:rgba(229,197,142,.1);font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:.25s;margin-top:22px}
+    .btn:hover{background:var(--gold);color:#201621;box-shadow:0 8px 28px rgba(229,197,142,.18);transform:translateY(-2px)}
+    .btn .arrow{font-size:17px;line-height:10px}
+    .two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,7vw,90px);align-items:center}
+    .quote-card{padding:32px 34px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,245,240,.12),rgba(255,245,240,.035));backdrop-filter:blur(15px);box-shadow:0 25px 80px rgba(0,0,0,.15)}
+    .quote-card .quote-mark{font:54px/1 var(--serif);color:var(--gold)}
+    .quote-card p{font:clamp(18px,2vw,24px)/1.6 var(--serif);color:#fff2ed;margin:12px 0 20px}
+    .quote-card small{font-size:10px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+    .milestones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:25px;max-width:620px}
+    .milestone{padding:16px 17px;border-left:1px solid var(--gold);background:rgba(255,255,255,.045)}
+    .milestone strong{display:block;font:22px var(--serif);color:var(--cream);margin-bottom:5px;font-weight:400}
+    .milestone span{font-size:10px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase}
+    .timer-wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:35px 0 18px;max-width:750px}
+    .time-box{border:1px solid rgba(229,197,142,.35);background:rgba(17,12,21,.42);backdrop-filter:blur(12px);padding:20px 14px;text-align:center;min-height:105px}
+    .time-box strong{display:block;font:clamp(30px,4vw,48px)/1 var(--serif);font-weight:400;color:#fff6ef;font-variant-numeric:tabular-nums}
+    .time-box span{display:block;margin-top:12px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+    .total-days{font-size:11px;letter-spacing:.12em;color:var(--muted)}
+    .photo-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(105px,15vh);gap:9px;width:100%;max-width:1000px;margin:22px auto 0}
+    .photo-tile{position:relative;overflow:hidden;border:1px solid rgba(255,245,240,.2);background:linear-gradient(135deg,rgba(232,174,185,.25),rgba(229,197,142,.09));min-height:95px}
+    .photo-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .65s ease,filter .65s ease;filter:saturate(.82)}
+    .photo-tile:hover img{transform:scale(1.08);filter:saturate(1.1)}
+    .photo-tile::after{content:attr(data-caption);position:absolute;left:0;right:0;bottom:0;padding:20px 10px 9px;background:linear-gradient(transparent,rgba(8,6,12,.82));font:13px var(--serif);color:#fff4ef}
+    .photo-tile:nth-child(1),.photo-tile:nth-child(8){grid-row:span 2}
+    .photo-tile:nth-child(4),.photo-tile:nth-child(10){grid-column:span 2}
+    .gallery-note{font-size:10px;color:var(--muted);letter-spacing:.1em;margin-top:12px;text-align:center}
+    .feature-list{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:30px}
+    .feature{padding:21px 18px;border-top:1px solid rgba(229,197,142,.55);background:rgba(255,255,255,.045)}
+    .feature .num{font:28px var(--serif);color:var(--gold)}
+    .feature h3{font:19px var(--serif);font-weight:400;margin:10px 0 7px}
+    .feature p{font-size:12px;line-height:1.7;color:var(--muted);margin:0}
+    .video-frame{width:min(850px,100%);margin-top:25px;border:1px solid rgba(229,197,142,.42);padding:9px;background:rgba(7,5,10,.5);box-shadow:0 25px 90px rgba(0,0,0,.35)}
+    video{width:100%;max-height:55vh;display:block;background:#08070b;object-fit:contain}
+    .video-caption{text-align:center;font:16px var(--serif);color:var(--muted);margin:13px 0 0}
+    .promise-list{display:grid;grid-template-columns:1fr 1fr;gap:15px;max-width:850px;margin-top:27px}
+    .promise{display:flex;gap:14px;padding:17px 18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,245,240,.1);font:17px/1.5 var(--serif);color:#f7e9e7}
+    .promise i{font-style:normal;color:var(--gold)}
+    .final-sign{font:clamp(18px,2vw,24px) var(--serif);color:var(--gold);margin-top:28px}
+    .signature{font:italic 18px var(--serif);color:var(--rose2);margin-top:10px}
+    .bottom-ui{position:fixed;z-index:35;left:clamp(18px,5vw,72px);right:clamp(18px,5vw,72px);bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .progress-area{display:flex;align-items:center;gap:13px;min-width:130px;flex:1;max-width:350px}
+    .progress-track{height:1px;background:rgba(255,255,255,.2);flex:1;position:relative;overflow:hidden}
+    .progress-fill{height:100%;width:10%;background:var(--gold);transition:width .5s ease}
+    .page-count{font-size:10px;letter-spacing:.13em;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+    .nav-controls{display:flex;align-items:center;gap:9px}
+    .nav-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:rgba(17,12,21,.4);color:var(--cream);cursor:pointer;backdrop-filter:blur(10px);transition:.2s}
+    .nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+    .nav-btn:disabled{opacity:.28;cursor:not-allowed}
+    .dots{display:flex;gap:7px;margin:0 7px}
+    .dot{height:5px;width:5px;border-radius:50%;border:0;background:rgba(255,255,255,.34);padding:0;cursor:pointer;transition:.3s}
+    .dot.active{width:21px;border-radius:9px;background:var(--gold)}
+    .toast{position:fixed;z-index:60;left:50%;bottom:86px;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:rgba(20,14,23,.92);border:1px solid var(--line);padding:11px 16px;color:#f8e9e5;font-size:12px;transition:.3s;backdrop-filter:blur(12px);text-align:center;max-width:calc(100% - 35px)}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .sparkle{position:absolute;width:4px;height:4px;border-radius:50%;background:#f5d8a6;box-shadow:0 0 12px 3px rgba(245,216,166,.42);animation:twinkle 3.2s infinite ease-in-out;pointer-events:none}
+    @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.65)}50%{opacity:.9;transform:scale(1.35)}}
+    .heart-float{position:absolute;color:rgba(245,203,209,.55);font-size:16px;animation:float 8s linear infinite;pointer-events:none}
+    @keyframes float{from{transform:translateY(25px) rotate(0);opacity:0}15%{opacity:.65}85%{opacity:.45}to{transform:translateY(-110vh) rotate(35deg);opacity:0}}
+    .about-you-panel{display:grid;grid-template-columns:170px 1fr;gap:14px;align-items:stretch;margin-top:22px}
+    .taca-portrait{width:100%;height:100%;min-height:320px;max-height:390px;object-fit:cover;object-position:center 25%;border:1px solid rgba(229,197,142,.38);box-shadow:0 18px 55px rgba(0,0,0,.25)}
+    .about-you-panel .feature-list{margin:0}
+    .photo-tile{cursor:zoom-in}
+    .music-overlay,.lightbox{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:22px;background:rgba(7,5,10,.82);backdrop-filter:blur(14px)}
+    .music-overlay[hidden],.lightbox[hidden]{display:none}
+    .music-card{position:relative;width:min(620px,100%);padding:30px;border:1px solid rgba(229,197,142,.45);background:linear-gradient(145deg,rgba(35,23,34,.98),rgba(12,9,17,.98));box-shadow:0 24px 90px rgba(0,0,0,.48)}
+    .music-card h2{font:clamp(30px,5vw,46px)/1.05 var(--serif);font-weight:400;margin:0 0 7px}
+    .music-subtitle{font:15px var(--serif);color:var(--rose2);margin:0 0 20px}
+    .music-close,.lightbox-close{position:absolute;right:14px;top:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--cream);font-size:25px;cursor:pointer}
+    .music-video-wrap{position:relative;aspect-ratio:16/9;background:#000;border:1px solid rgba(229,197,142,.28)}
+    .music-video-wrap iframe{width:100%;height:100%;border:0;display:block}
+    .music-note{font-size:11px;line-height:1.6;color:var(--muted);margin:15px 0 8px}
+    .music-fallback{color:var(--gold);font-size:11px;letter-spacing:.12em;text-decoration:none;text-transform:uppercase}
+    .lightbox{z-index:95}
+    .lightbox figure{margin:0;display:flex;align-items:center;flex-direction:column;gap:12px;max-width:94vw;max-height:88vh}
+    .lightbox img{display:block;max-width:92vw;max-height:78vh;object-fit:contain;border:1px solid rgba(229,197,142,.5);box-shadow:0 20px 70px rgba(0,0,0,.5)}
+    .lightbox figcaption{font:17px var(--serif);color:var(--cream);text-align:center}
+    .lightbox-close{z-index:2;right:24px;top:22px}
+    @media(max-width:760px){
+      .topbar{height:64px;padding:0 21px}.brand{font-size:13px}.sound-label{display:none}
+      .stage{min-height:560px}.slide{padding:85px 25px 105px}.slide::after{inset:10px}
+      .display{font-size:clamp(47px,14vw,76px)}.hero-center .display{font-size:clamp(48px,14vw,82px)}
+      .two-col{grid-template-columns:1fr;gap:25px}.quote-card{padding:23px}
+      .timer-wrap{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:25px}.time-box{min-height:84px;padding:15px 10px}
+      .photo-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:95px;gap:6px}.photo-tile:nth-child(1),.photo-tile:nth-child(8){grid-row:span 2}.photo-tile:nth-child(4),.photo-tile:nth-child(10){grid-column:span 1}
+      .feature-list{grid-template-columns:1fr;gap:8px;margin-top:18px}.feature{padding:14px}.feature .num{font-size:20px}.feature h3{display:inline;margin:0 8px}.feature p{margin-top:5px}
+      .about-you-panel{grid-template-columns:105px 1fr;gap:9px;margin-top:14px}.taca-portrait{min-height:270px;max-height:330px}.music-card{padding:23px 16px}.music-overlay{padding:12px}.music-close{right:7px;top:7px}.lightbox-close{right:12px;top:12px}
+      .promise-list{grid-template-columns:1fr;gap:8px}.promise{padding:12px 14px;font-size:15px}
+      .bottom-ui{left:20px;right:20px;bottom:15px}.progress-area{max-width:none}.dots{gap:5px;margin:0 2px}.dot{width:4px;height:4px}.dot.active{width:14px}.nav-btn{width:37px;height:37px}
+      .body-copy{font-size:13px}.lead{font-size:17px}.milestones{gap:8px}.milestone{padding:13px}
+    }
+    @media(max-height:680px) and (min-width:761px){.slide{padding-top:80px;padding-bottom:82px}.display{font-size:72px}.photo-grid{grid-auto-rows:11vh}.section-title{font-size:48px}.timer-wrap{margin:20px 0 12px}.time-box{min-height:88px;padding:14px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#slide-1" aria-label="COSA dan TACA">COSA <b>×</b> TACA</a>
+    <div class="top-actions">
+      <span class="sound-label" id="musicLabel">a thousand years · instrumental</span>
+      <button class="music-btn" id="musicToggle" aria-label="Buka pemutar A Thousand Years" title="Putar A Thousand Years instrumental">♫</button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage" aria-live="polite">
+    <!-- Sepuluh latar slide memakai foto asli COSA dan TACA. -->
+    <section class="slide active" id="slide-1" data-title="the beginning" style="--bg-image:url('assets/bg-01.webp')">
+      <div class="slide-inner hero-center">
+        <div class="ornament" aria-hidden="true">∞</div>
+        <p class="eyebrow">a little celebration of us</p>
+        <h1 class="display">COSA <em>×</em><br>TACA</h1>
+        <p class="lead">dua hati, satu cerita, dan begitu banyak alasan untuk terus memilih satu sama lain</p>
+        <div class="rule"></div>
+        <p class="micro">our anniversary · <span id="anniversaryLabel">7 november 2025</span></p>
+        <button class="btn" data-next>mulai cerita kita <span class="arrow">↗</span></button>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2" data-title="our story" style="--bg-image:url('assets/bg-02.webp')">
+      <div class="slide-inner two-col">
+        <div>
+          <p class="eyebrow">chapter 01 · our story</p>
+          <h2 class="section-title">dari pertemuan kecil, tumbuh <em>cerita besar</em></h2>
+          <p class="lead">kita mungkin tidak tahu sejak awal akan sejauh apa cerita ini berjalan. yang jelas, semuanya dimulai dari satu pertemuan.</p>
+          <div class="rule"></div>
+          <p class="body-copy">11 oktober 2025 menjadi awal kita bertemu. sehari setelahnya, kita mulai saling berbincang. lalu, tanpa perlu terburu-buru, rasa itu tumbuh sampai akhirnya kita memilih untuk memulai hubungan pada 7 november 2025.</p>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">“</div>
+          <p>aku tidak tahu semua hal yang akan terjadi di depan, tapi aku tahu ada banyak hari yang ingin kujalani bersamamu.</p>
+          <small>cosa, untuk taca</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3" data-title="little moments" style="--bg-image:url('assets/bg-03.webp')">
+      <div class="slide-inner">
+        <p class="eyebrow">chapter 02 · little moments</p>
+        <h2 class="section-title">tempat-tempat yang menyimpan <em>cerita</em></h2>
+        <p class="body-copy">dari first met, suasana malam di Kodam, momen BNS, sampai hari-hari kegiatan dan training. setiap foto punya suasana sendiri, dan semuanya menjadi bagian dari perjalanan kita.</p>
+        <div class="milestones">
+          <div class="milestone"><strong>first met</strong><span>awal dari semua cerita</span></div>
+          <div class="milestone"><strong>17 agustus event</strong><span>momen yang kita simpan</span></div>
+          <div class="milestone"><strong>bns after llwe</strong><span>satu lagi cerita untuk dikenang</span></div>
+          <div class="milestone"><strong>kodam night</strong><span>malam kecil yang jadi memori</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-4" data-title="our time" style="--bg-image:url('assets/bg-04.webp')">
+      <div class="slide-inner">
+        <p class="eyebrow">chapter 03 · every second counts</p>
+        <h2 class="section-title">waktu yang telah kita <em>lalui</em></h2>
+        <p class="body-copy">setiap detik punya ceritanya sendiri. angka-angka ini terus bergerak, seperti harapan agar cerita kita juga terus bertumbuh.</p>
+        <div class="timer-wrap" aria-label="Lama hubungan">
+          <div class="time-box"><strong id="years">0</strong><span>tahun</span></div>
+          <div class="time-box"><strong id="months">0</strong><span>bulan</span></div>
+          <div class="time-box"><strong id="days">0</strong><span>hari</span></div>
+          <div class="time-box"><strong id="hours">00</strong><span>jam</span></div>
+          <div class="time-box"><strong id="minutes">00</strong><span>menit</span></div>
+          <div class="time-box"><strong id="seconds">00</strong><span>detik</span></div>
+        </div>
+        <p class="total-days">sebanyak <strong id="totalDays">0</strong> hari telah kita lewati bersama</p>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5" data-title="about you" style="--bg-image:url('assets/bg-05.webp')">
+      <div class="slide-inner two-col">
+        <div>
+          <p class="eyebrow">chapter 04 · about you</p>
+          <h2 class="section-title">tentang kamu, yang <em>istimewa</em></h2>
+          <p class="lead">ada banyak hal yang kusuka darimu, bahkan mungkin ada yang belum sempat kusampaikan.</p>
+          <div class="rule"></div>
+          <p class="body-copy">aku suka caramu tertawa, caramu bercerita, bahkan caramu diam saat sedang memikirkan sesuatu. kamu tidak harus selalu sempurna untuk menjadi seseorang yang begitu berarti.</p>
+        </div>
+        <div class="about-you-panel">
+          <img class="taca-portrait" src="assets/taca-portrait.webp" alt="Potret TACA" loading="lazy">
+          <div class="feature-list" style="grid-template-columns:1fr">
+            <div class="feature"><span class="num">01</span><h3>your kindness</h3><p>kebaikanmu terasa dari hal-hal sederhana yang kamu lakukan.</p></div>
+            <div class="feature"><span class="num">02</span><h3>your mind</h3><p>aku mengagumi kecerdasan dan semangatmu untuk terus belajar.</p></div>
+            <div class="feature"><span class="num">03</span><h3>your strength</h3><p>disiplin dan tekunmu membuatku selalu punya alasan untuk ikut bangga.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-6" data-title="our gallery" style="--bg-image:url('assets/bg-06.webp')">
+      <div class="slide-inner">
+        <p class="eyebrow">chapter 05 · our gallery</p>
+        <h2 class="section-title">seribu ekspresi, <em>satu favorit</em></h2>
+        <p class="body-copy">senyum, sedih, bahagia, manja, serius, dan semua versi dirimu yang ingin kusimpan sebagai bagian dari cerita kita.</p>
+        <div class="photo-grid">
+          <div class="photo-tile" data-caption="senyum yang selalu kusuka"><img src="assets/gallery-01.webp" alt="TACA tersenyum" loading="lazy"></div>
+          <div class="photo-tile" data-caption="hari-hari bahagiamu"><img src="assets/gallery-02.webp" alt="TACA dalam momen bahagia" loading="lazy"></div>
+          <div class="photo-tile" data-caption="senyum manis taca"><img src="assets/gallery-03.webp" alt="Senyum manis TACA" loading="lazy"></div>
+          <div class="photo-tile" data-caption="versi imut kesayanganku"><img src="assets/gallery-04.webp" alt="TACA bersama boneka kesayangan" loading="lazy"></div>
+          <div class="photo-tile" data-caption="bahkan saat sedih, kamu tetap berharga"><img src="assets/gallery-05.webp" alt="TACA dengan ekspresi sedih" loading="lazy"></div>
+          <div class="photo-tile" data-caption="hari ketika kamu sedang lelah"><img src="assets/gallery-06.webp" alt="TACA dengan ekspresi lesu" loading="lazy"></div>
+          <div class="photo-tile" data-caption="semua ekspresimu tetap kusimpan"><img src="assets/gallery-07.webp" alt="TACA dengan ekspresi marah" loading="lazy"></div>
+          <div class="photo-tile" data-caption="cosa & taca"><img src="assets/gallery-08.webp" alt="Foto COSA dan TACA bersama" loading="lazy"></div>
+          <div class="photo-tile" data-caption="our little moment"><img src="assets/gallery-09.webp" alt="Kenangan COSA dan TACA" loading="lazy"></div>
+          <div class="photo-tile" data-caption="satu frame, banyak cerita"><img src="assets/gallery-10.webp" alt="Foto COSA dan TACA bersama" loading="lazy"></div>
+          <div class="photo-tile" data-caption="just the two of us"><img src="assets/gallery-11.webp" alt="Foto COSA dan TACA bersama" loading="lazy"></div>
+          <div class="photo-tile" data-caption="where it all began"><img src="assets/gallery-12.webp" alt="Kenangan first met COSA dan TACA" loading="lazy"></div>
+          <div class="photo-tile" data-caption="another day to remember"><img src="assets/gallery-13.webp" alt="Kenangan COSA dan TACA di BNS" loading="lazy"></div>
+          <div class="photo-tile" data-caption="kodam night"><img src="assets/gallery-14.webp" alt="Kenangan malam COSA dan TACA" loading="lazy"></div>
+        </div>
+        <p class="gallery-note">14 potongan cerita: semua ekspresimu, semua momen kita. sentuh foto untuk melihat lebih dekat.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7" data-title="about us" style="--bg-image:url('assets/bg-07.webp')">
+      <div class="slide-inner">
+        <p class="eyebrow">chapter 06 · about us</p>
+        <h2 class="section-title">bukan tentang sempurna,<br><em>tapi tentang bersama</em></h2>
+        <p class="lead">kita adalah dua manusia yang sedang belajar memahami, bertumbuh, dan menemukan cara terbaik untuk saling menjaga.</p>
+        <div class="feature-list">
+          <div class="feature"><span class="num">♡</span><h3>understanding</h3><p>belajar mendengar tanpa buru-buru menghakimi.</p></div>
+          <div class="feature"><span class="num">∞</span><h3>growing</h3><p>mendukung mimpi masing-masing tanpa kehilangan arah bersama.</p></div>
+          <div class="feature"><span class="num">✧</span><h3>choosing</h3><p>mengusahakan hubungan dengan rasa hormat dan ketulusan.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-8" data-title="our video" style="--bg-image:url('assets/bg-08.webp')">
+      <div class="slide-inner">
+        <p class="eyebrow">chapter 07 · moving memories</p>
+        <h2 class="section-title">sepotong cerita dalam <em>gerak</em></h2>
+        <p class="body-copy">ini video kita yang ikut tersimpan di sini. kapan pun rindu, tekan play dan biarkan satu momen kecil membawa kita kembali ke hari itu.</p>
+        <div class="video-frame">
+          <video id="ourVideo" controls playsinline preload="metadata" poster="assets/video-poster.webp">
+            <source src="assets/video-kita.mp4" type="video/mp4">
+            browser kamu belum mendukung pemutar video ini
+          </video>
+        </div>
+        <p class="video-caption">cosa × taca · one little film, a thousand feelings.</p>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-9" data-title="our wishes" style="--bg-image:url('assets/bg-09.webp')">
+      <div class="slide-inner">
+        <p class="eyebrow">chapter 08 · wishes & promises</p>
+        <h2 class="section-title">doa kecil untuk <em>kita</em></h2>
+        <p class="lead">semoga yang kita rawat hari ini menjadi sesuatu yang indah untuk dikenang esok hari.</p>
+        <div class="promise-list">
+          <div class="promise"><i>✧</i><span>semoga kita selalu diberi hati yang lapang untuk saling memahami.</span></div>
+          <div class="promise"><i>✧</i><span>semoga komunikasi dan kejujuran selalu menjadi rumah bagi hubungan ini.</span></div>
+          <div class="promise"><i>✧</i><span>semoga setiap impian kita tumbuh, tanpa saling membatasi.</span></div>
+          <div class="promise"><i>✧</i><span>semoga saat ada hari yang berat, kita tetap memilih cara yang baik untuk menyelesaikannya.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-10" data-title="to our forever" style="--bg-image:url('assets/bg-10.webp')">
+      <div class="slide-inner hero-center">
+        <div class="ornament" aria-hidden="true">♡</div>
+        <p class="eyebrow">chapter 09 · to our forever</p>
+        <h2 class="display">selama masih ada <em>kita</em></h2>
+        <p class="lead">terima kasih sudah menjadi bagian dari cerita ini. semoga langkah kita selalu didekatkan pada hal-hal baik, diberi kesabaran saat berbeda, dan diberi alasan untuk terus bertumbuh bersama.</p>
+        <div class="rule"></div>
+        <p class="lead">semoga hubungan ini tetap langgeng, bukan hanya sampai anniversary berikutnya, tetapi sampai hari-hari panjang yang belum kita tahu namanya.</p>
+        <p class="final-sign">“i choose you, in every little moment.”</p>
+        <p class="signature">with love, COSA</p>
+        <button class="btn" id="replayBtn">ulangi cerita kita ↺</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="bottom-ui">
+    <div class="progress-area"><span class="page-count" id="pageCount">01 / 10</span><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><span class="page-count" id="chapterName">the beginning</span></div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" aria-label="Slide sebelumnya" title="Sebelumnya">←</button>
+      <div class="dots" id="dots" aria-label="Pilih slide"></div>
+      <button class="nav-btn" id="nextBtn" aria-label="Slide berikutnya" title="Berikutnya">→</button>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="music-overlay" id="musicOverlay" hidden aria-hidden="true">
+    <div class="music-card" role="dialog" aria-modal="true" aria-labelledby="musicTitle">
+      <button class="music-close" id="musicClose" type="button" aria-label="Tutup pemutar">×</button>
+      <p class="eyebrow">our song</p>
+      <h2 id="musicTitle">A Thousand Years</h2>
+      <p class="music-subtitle">Piano instrumental · Sing2Piano</p>
+      <div class="music-video-wrap">
+        <iframe id="musicFrame" title="A Thousand Years acoustic instrumental" src="about:blank" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <p class="music-note">pemutar musik berjalan melalui YouTube dan membutuhkan koneksi internet.</p>
+      <a class="music-fallback" href="https://www.youtube.com/watch?v=mJ7fScKIh8I&t=3s" target="_blank" rel="noopener noreferrer">buka lagu di YouTube ↗</a>
+    </div>
+  </div>
+  <div class="lightbox" id="lightbox" hidden aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Tutup foto">×</button>
+    <figure><img id="lightboxImage" alt="Foto kenangan COSA dan TACA"><figcaption id="lightboxCaption"></figcaption></figure>
+  </div>
+
+  <script>
+    'use strict';
+    /* UBAH TANGGAL DI BAWAH bila tanggal anniversary COSA & TACA berbeda. Format: tahun, bulan, tanggal. */
+    const ANNIVERSARY = { year: 2025, month: 11, day: 7 };
+    const COUPLE = { first: 'COSA', second: 'TACA' };
+
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsWrap = document.getElementById('dots');
+    const progressFill = document.getElementById('progressFill');
+    const pageCount = document.getElementById('pageCount');
+    const chapterName = document.getElementById('chapterName');
+    const musicOverlay = document.getElementById('musicOverlay');
+    const musicFrame = document.getElementById('musicFrame');
+    const musicClose = document.getElementById('musicClose');
+    const musicToggle = document.getElementById('musicToggle');
+    const musicLabel = document.getElementById('musicLabel');
+    const toast = document.getElementById('toast');
+    let current = 0;
+    let toastTimer;
+
+    const startAt = new Date(ANNIVERSARY.year, ANNIVERSARY.month - 1, ANNIVERSARY.day, 0, 0, 0);
+    const monthNames = ['januari','februari','maret','april','mei','juni','juli','agustus','september','oktober','november','desember'];
+    document.getElementById('anniversaryLabel').textContent = `${ANNIVERSARY.day} ${monthNames[ANNIVERSARY.month-1]} ${ANNIVERSARY.year}`;
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>toast.classList.remove('show'),2600);
+    }
+    function renderDots(){
+      slides.forEach((slide,index)=>{
+        const dot=document.createElement('button');
+        dot.className='dot'+(index===0?' active':'');
+        dot.type='button';
+        dot.setAttribute('aria-label',`Buka slide ${index+1}: ${slide.dataset.title}`);
+        dot.addEventListener('click',()=>goTo(index));
+        dotsWrap.appendChild(dot);
+      });
+    }
+    function goTo(index){
+      const next=Math.max(0,Math.min(slides.length-1,index));
+      slides[current].classList.remove('active');
+      current=next;
+      slides[current].classList.add('active');
+      slides[current].scrollTop=0;
+      Array.from(dotsWrap.children).forEach((dot,i)=>{
+        dot.classList.toggle('active',i===current);
+        dot.setAttribute('aria-current',i===current?'step':'false');
+      });
+      prevBtn.disabled=current===0;
+      nextBtn.disabled=current===slides.length-1;
+      progressFill.style.width=((current+1)/slides.length*100)+'%';
+      pageCount.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+      chapterName.textContent=slides[current].dataset.title||'';
+    }
+    function next(){goTo(current+1)}
+    function prev(){goTo(current-1)}
+    renderDots();goTo(0);
+    prevBtn.addEventListener('click',prev);
+    nextBtn.addEventListener('click',next);
+    document.querySelectorAll('[data-next]').forEach(button=>button.addEventListener('click',next));
+    document.getElementById('replayBtn').addEventListener('click',()=>goTo(0));
+
+    document.addEventListener('keydown',event=>{
+      if(event.key==='ArrowRight'||event.key==='PageDown'){event.preventDefault();next()}
+      if(event.key==='ArrowLeft'||event.key==='PageUp'){event.preventDefault();prev()}
+      if(event.key==='Home'){event.preventDefault();goTo(0)}
+      if(event.key==='End'){event.preventDefault();goTo(slides.length-1)}
+    });
+    let touchStartX=0,touchStartY=0;
+    const stage=document.getElementById('stage');
+    stage.addEventListener('touchstart',event=>{touchStartX=event.changedTouches[0].screenX;touchStartY=event.changedTouches[0].screenY},{passive:true});
+    stage.addEventListener('touchend',event=>{
+      const dx=event.changedTouches[0].screenX-touchStartX;
+      const dy=event.changedTouches[0].screenY-touchStartY;
+      if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)){dx<0?next():prev()}
+    },{passive:true});
+
+    function openMusic(){
+      musicOverlay.hidden=false;
+      musicOverlay.setAttribute('aria-hidden','false');
+      musicFrame.src='https://www.youtube-nocookie.com/embed/mJ7fScKIh8I?start=3&autoplay=1&controls=1&rel=0&playsinline=1';
+      musicToggle.classList.add('playing');
+      musicToggle.textContent='×';
+      musicToggle.setAttribute('aria-label','Tutup pemutar musik');
+      musicLabel.textContent='now playing · instrumental';
+      musicClose.focus();
+    }
+    function closeMusic(){
+      musicFrame.src='about:blank';
+      musicOverlay.hidden=true;
+      musicOverlay.setAttribute('aria-hidden','true');
+      musicToggle.classList.remove('playing');
+      musicToggle.textContent='♫';
+      musicToggle.setAttribute('aria-label','Buka pemutar A Thousand Years');
+      musicLabel.textContent='a thousand years · instrumental';
+    }
+    function toggleMusic(){ musicOverlay.hidden ? openMusic() : closeMusic(); }
+    musicToggle.addEventListener('click',toggleMusic);
+    musicClose.addEventListener('click',closeMusic);
+    musicOverlay.addEventListener('click',event=>{if(event.target===musicOverlay)closeMusic()});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'){if(!musicOverlay.hidden)closeMusic();if(!lightbox.hidden)closeLightbox()}});
+
+    const lightbox=document.getElementById('lightbox');
+    const lightboxImage=document.getElementById('lightboxImage');
+    const lightboxCaption=document.getElementById('lightboxCaption');
+    const lightboxClose=document.getElementById('lightboxClose');
+    function openLightbox(img,caption){
+      lightboxImage.src=img.src;
+      lightboxImage.alt=img.alt;
+      lightboxCaption.textContent=caption || img.alt;
+      lightbox.hidden=false;
+      lightbox.setAttribute('aria-hidden','false');
+      lightboxClose.focus();
+    }
+    function closeLightbox(){
+      lightbox.hidden=true;
+      lightbox.setAttribute('aria-hidden','true');
+      lightboxImage.removeAttribute('src');
+    }
+    document.querySelectorAll('.photo-tile').forEach(tile=>{
+      const img=tile.querySelector('img');
+      tile.addEventListener('click',()=>openLightbox(img,tile.dataset.caption));
+    });
+    lightboxClose.addEventListener('click',closeLightbox);
+    lightbox.addEventListener('click',event=>{if(event.target===lightbox)closeLightbox()});
+
+    function addMonthsClamped(date,months){
+      const result=new Date(date);
+      const day=result.getDate();
+      result.setDate(1);
+      result.setMonth(result.getMonth()+months);
+      const lastDay=new Date(result.getFullYear(),result.getMonth()+1,0).getDate();
+      result.setDate(Math.min(day,lastDay));
+      return result;
+    }
+    function updateDuration(){
+      const now=new Date();
+      if(now<startAt){
+        ['years','months','days','hours','minutes','seconds','totalDays'].forEach(id=>document.getElementById(id).textContent='0');
+        return;
+      }
+      let cursor=new Date(startAt);
+      let years=now.getFullYear()-cursor.getFullYear();
+      if(addMonthsClamped(cursor,years*12)>now)years--;
+      cursor=addMonthsClamped(cursor,years*12);
+      let months=(now.getFullYear()-cursor.getFullYear())*12+(now.getMonth()-cursor.getMonth());
+      if(addMonthsClamped(cursor,months)>now)months--;
+      cursor=addMonthsClamped(cursor,months);
+      let remaining=now-cursor;
+      const days=Math.floor(remaining/86400000);remaining-=days*86400000;
+      const hours=Math.floor(remaining/3600000);remaining-=hours*3600000;
+      const minutes=Math.floor(remaining/60000);remaining-=minutes*60000;
+      const seconds=Math.floor(remaining/1000);
+      const values={years,months,days,hours,minutes,seconds,totalDays:Math.floor((now-startAt)/86400000)};
+      Object.entries(values).forEach(([id,value])=>document.getElementById(id).textContent=(id==='hours'||id==='minutes'||id==='seconds')?String(value).padStart(2,'0'):value.toLocaleString('id-ID'));
+    }
+    updateDuration();setInterval(updateDuration,1000);
+
+    // Bintang dekoratif ringan; tidak menggunakan library eksternal.
+    const stageEl=document.getElementById('stage');
+    for(let i=0;i<24;i++){
+      const star=document.createElement('span');star.className='sparkle';
+      star.style.left=(4+Math.random()*92)+'%';star.style.top=(9+Math.random()*82)+'%';
+      star.style.animationDelay=(Math.random()*4)+'s';star.style.animationDuration=(2.5+Math.random()*3)+'s';
+      stageEl.appendChild(star);
+    }
+    for(let i=0;i<7;i++){
+      const heart=document.createElement('span');heart.className='heart-float';heart.textContent='♡';
+      heart.style.left=(8+Math.random()*84)+'%';heart.style.bottom=(-10-Math.random()*25)+'px';
+      heart.style.animationDelay=(Math.random()*8)+'s';heart.style.animationDuration=(8+Math.random()*7)+'s';
+      stageEl.appendChild(heart);
+    }
+
+    // Video asli COSA dan TACA sudah disertakan di folder assets.
+    const video=document.getElementById('ourVideo');
+    video.addEventListener('error',()=>showToast('Browser tidak dapat memutar video ini. Coba buka dengan Chrome.'));
+  </script>
+</body>
+</html>
